@@ -55,7 +55,7 @@ class LoginController extends Controller
          if (Auth::guard($type)->attempt($credentials,$request->get('remember'))) {
         return redirect()->route($type);
             }
-   
+         dd('error');;;;;
         flash('mot de passe ou email non valide','danger');
         return back()->withInput($request->only('email', 'remember'));
     }

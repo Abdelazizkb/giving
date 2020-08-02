@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ route('Login',['type'=>'donor']) }}">
+                    <form method="post" id='form' action="{{ route('Login',['type'=>'donor']) }}" >
                         @csrf
                         <div class="form-inline p-1">
                             <input type="radio" class=" d-inline-flexd" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
@@ -80,14 +80,14 @@
 </div>
 <script type="text/javascript">
     function membre(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'membre']) }}';
+   document.getElementById('form').action="{{ route('Login',['type'=>'membre']) }}";
   
  }
    function donor(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'donor']) }};
+   document.getElementById('form').action="{{ route('Login',['type'=>'donor']) }}";
  }
  function demandeur(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'demandeur']) }}';
+   document.getElementById('form').action="{{ route('Login',['type'=>'demandeur']) }}";
  }
 </script>
 @endsection
