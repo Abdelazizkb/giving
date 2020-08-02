@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
+use Auth;
 class LoginController extends Controller
 {
     /*
@@ -33,8 +34,30 @@ class LoginController extends Controller
      *
      * @return void
      */
+    
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware(['guest','guest:donor','guest:admin','guest:membre','guest:demandeur'])->except('logout');
     }
+
+
+
+
+
+    public function Login(Request $request,$type)
+    {
+        $this->validate($request, [
+            'email'   => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+          $credentials = $request->only('email', 'password');
+         if (Auth::guard($type)->attempt($credentials,$request->get('remember'))) {
+        return redirect()->route($type);
+            }
+   
+        flash('mot de passe ou email non valide','danger');
+        return back()->withInput($request->only('email', 'remember'));
+    }
+
 }

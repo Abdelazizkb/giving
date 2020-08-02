@@ -18,8 +18,20 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        if ($guard == "donor" && Auth::guard($guard)->check()) {
+            return redirect('/donor');
+        }
+        if ($guard == "membre" && Auth::guard($guard)->check()) {
+            return redirect('/membre');
+        }
+        if ($guard == "admin" && Auth::guard($guard)->check()) {
+            return redirect('/admin');
+        }
+        if ($guard == "demandeur" && Auth::guard($guard)->check()) {
+            return redirect('/demandeur');
+        }
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect('/home');
         }
 
         return $next($request);

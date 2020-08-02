@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Donor;
+use App\Membre;
+use App\Demandeur;
+
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\registerFormRequest;
 
 class RegisterController extends Controller
 {
@@ -38,7 +44,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware(['guest','guest:donor','guest:admin','guest:membre','guest:demandeur'])->except('logout');
     }
 
     /**
@@ -70,4 +76,180 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    protected function createDonor(RegisterFormRequest $request)
+    {
+        $mail=Donor::where('email', $request->email)->get();
+        $phone=Donor::where('phone', $request->phone)->get();
+        if($mail->isEmpty()){
+        
+        if($phone->isEmpty()){
+        Donor::create([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        ]);
+        $credentials = $request->only('email', 'password');
+        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
+                $token ="6cb055b85632ae620ee945c04f502e09";
+                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
+                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
+                $twilio_number = +12025191461;
+                $client = new Client($twilio_sid, $token);
+                $client->messages->create(
+                    // Where to send a text message (your cell phone?)
+                     $request->phone,
+                  array(
+                'from' => $twilio_number,
+                'body' => 'I sent this message in under 10 minutes!'
+                   )
+               );
+                $client->verify->v2->services($twilio_verify_sid)
+                    ->verifications;
+                    
+        
+        */
+        if (Auth::guard('donor')->attempt($credentials)) {
+        return redirect()->route('donor');
+        }
+        }
+        else{
+        flash('numero telephone deja utiliser','danger');
+        return redirect()->back();
+        }
+        
+        }
+        else{
+        flash('email deja utiliser','danger');
+        return redirect()->back();
+        
+        }
+    }
+
+
+    protected function createMembre(RegisterFormRequest $request)
+    {
+        $mail=Membre::where('email', $request->email)->get();
+        $phone=Membre::where('phone', $request->phone)->get();
+        if($mail->isEmpty()){
+        
+        if($phone->isEmpty()){
+         Membre::create([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        ]);
+        $credentials = $request->only('email', 'password');
+        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
+                $token ="6cb055b85632ae620ee945c04f502e09";
+                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
+                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
+                $twilio_number = +12025191461;
+                $client = new Client($twilio_sid, $token);
+                $client->messages->create(
+                    // Where to send a text message (your cell phone?)
+                     $request->phone,
+                  array(
+                'from' => $twilio_number,
+                'body' => 'I sent this message in under 10 minutes!'
+                   )
+               );
+                $client->verify->v2->services($twilio_verify_sid)
+                    ->verifications;
+                    
+        
+        */
+        if (Auth::guard('membre')->attempt($credentials)) {
+        /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
+        return redirect()->route('membre');
+        }
+        }
+        else{
+        flash('numero telephone deja utiliser','danger');
+        return redirect()->back();
+        }
+        
+        }
+        else{
+        flash('email deja utiliser','danger');
+        return redirect()->back();
+        
+        }
+    }
+
+
+    protected function createDemandeur(RegisterFormRequest $request)
+    {
+        $mail=Demandeur::where('email', $request->email)->get();
+        $phone=Demandeur::where('phone', $request->phone)->get();
+        if($mail->isEmpty()){
+        
+        if($phone->isEmpty()){
+         Demandeur::create([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'phone' => $request->phone,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        ]);
+        $credentials = $request->only('email', 'password');
+        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
+                $token ="6cb055b85632ae620ee945c04f502e09";
+                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
+                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
+                $twilio_number = +12025191461;
+                $client = new Client($twilio_sid, $token);
+                $client->messages->create(
+                    // Where to send a text message (your cell phone?)
+                     $request->phone,
+                  array(
+                'from' => $twilio_number,
+                'body' => 'I sent this message in under 10 minutes!'
+                   )
+               );
+                $client->verify->v2->services($twilio_verify_sid)
+                    ->verifications;
+                    
+        
+        */
+        if (Auth::guard('demandeur')->attempt($credentials)) {
+        /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
+        return redirect()->route('demandeur');
+        }
+        }
+        else{
+        flash('numero telephone deja utiliser','danger');
+        return redirect()->back();
+        }
+        
+        }
+        else{
+        flash('email deja utiliser','danger');
+        return redirect()->back();
+        
+        }
+    }
+protected function createAdmin(registerFormRequest $request)
+{
+
+$admin=Admin::where('email', $request->email)->get();
+if($admin->isEmpty()){
+Admin::create([
+'name' => $request->name,
+'email' => $request->email,
+'password' => Hash::make($request->password),
+]);
+$credentials = $request->only('email', 'password');
+if (Auth::guard('admin')->attempt($credentials)) {
+return redirect()->back();
+}    }
+else{
+flash('email deja utiliser','danger');
+return redirect()->back();
+}
+}
 }

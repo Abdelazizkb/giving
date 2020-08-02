@@ -40,6 +40,27 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'donor' => [
+            'driver' => 'session',
+            'provider' => 'donors',
+        ],
+        
+        'membre' => [
+            'driver' => 'session',
+            'provider' => 'membres',
+        ],
+        'representant' => [
+             'driver' => 'session',
+            'provider' => 'representants',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'demandeur' => [
+            'driver' => 'session',
+            'provider' => 'demandeurs',
+        ],
 
         'api' => [
             'driver' => 'token',
@@ -70,7 +91,27 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+        'donors' => [
+            'driver' => 'eloquent',
+            'model' => App\Donor::class,
+        ],
 
+        'membres' => [
+            'driver' => 'eloquent',
+            'model' => App\Membre::class,
+        ],
+         'representants' => [
+            'driver' => 'eloquent',
+            'model' => App\Representant::class,
+        ],
+        'demandeurs' => [
+            'driver' => 'eloquent',
+            'model' => App\Demandeur::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

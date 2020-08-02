@@ -5,20 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">{{ __('Login admin') }}</div>
 
                 <div class="card-body">
-                    <form method="post" action="{{ route('Login',['type'=>'donor']) }}">
+                    <form method="POST" action="/admin/login">
                         @csrf
-                        <div class="form-inline p-1">
-                            <input type="radio" class=" d-inline-flexd" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
-                            <label for="donateur"  class=" pr-4" >Donateur</label><br>
-                            <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
-                            <label class="pr-4" for="female" >Membre</label><br>
-                            <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="demandeur()">
-                            <label class="pr-4" for="female" >demandeur</label><br>
-                            
-                        </div>
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -78,16 +70,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    function membre(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'membre']) }}';
-  
- }
-   function donor(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'donor']) }};
- }
- function demandeur(){
-   document.getElementById('form').action='{{ route('Login',['type'=>'demandeur']) }}';
- }
-</script>
 @endsection
