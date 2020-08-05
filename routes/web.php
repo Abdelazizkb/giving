@@ -41,3 +41,5 @@ Route::post('/admin/register', 'Auth\RegisterController@createAdmin');
 
 Route::get('/admin/login', 'Auth\LoginController@showAdminloginForm')->name('adminlogin');
 Route::post('/admin/login', 'Auth\LoginController@adminlogin');
+
+Route::get('/verify', 'PhoneController@showVerificationform')->name('verify-form');

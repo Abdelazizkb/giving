@@ -24,6 +24,8 @@ class registerFormRequest extends FormRequest
     public function messages()
 {
     return [
+        'phone.numeric'=>'Vous devez entrer une valeur numeric',
+        'phone.required'=>'Entrez votre numero telephone',
         'first_name.required' => 'Vous devez entrer un votre nom',
         'email.required'  => 'Vous devez entrer un email',
         'password.required'  => 'Vous devez entrer un mot de passe',
@@ -38,7 +40,7 @@ class registerFormRequest extends FormRequest
     public function rules()
     {
         return [
-          
+            'phone'=>'required|numeric',          
             'first_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',

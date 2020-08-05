@@ -8,7 +8,10 @@ use App\User;
 use App\Donor;
 use App\Membre;
 use App\Demandeur;
+use App\Code;
 
+use Twilio\Rest\Client;
+use Keygen;
 use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -78,13 +81,13 @@ class RegisterController extends Controller
     }
 
     protected function createDonor(RegisterFormRequest $request)
-    {
+    {   if($request->route()->named('donor-register')){
         $mail=Donor::where('email', $request->email)->get();
         $phone=Donor::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
         
         if($phone->isEmpty()){
-        Donor::create([
+        $donor=Donor::create([
         'first_name' => $request->first_name,
         'last_name' => $request->last_name,
         'phone' => $request->phone,
@@ -92,27 +95,30 @@ class RegisterController extends Controller
         'password' => Hash::make($request->password),
         ]);
         $credentials = $request->only('email', 'password');
-        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
+        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));*/ 
                 $token ="6cb055b85632ae620ee945c04f502e09";
                 $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
                 $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
                 $twilio_number = +12025191461;
+                
                 $client = new Client($twilio_sid, $token);
+                
+                $code = Keygen::numeric(6)->generate();
+
                 $client->messages->create(
-                    // Where to send a text message (your cell phone?)
-                     $request->phone,
-                  array(
-                'from' => $twilio_number,
-                'body' => 'I sent this message in under 10 minutes!'
-                   )
-               );
+                    $request->phone,array('from'=>$twilio_number,'body' => 'Givingcom : votre code de verification '.$code)
+                );
                 $client->verify->v2->services($twilio_verify_sid)
                     ->verifications;
                     
-        
-        */
+                Code::create([
+                        'code' => $code,
+                        'user_id' => $donor->id,
+                        'type' => 'donor',
+                        ]);
+       
         if (Auth::guard('donor')->attempt($credentials)) {
-        return redirect()->route('donor');
+            return view('auth.phonecode');    
         }
         }
         else{
@@ -125,6 +131,9 @@ class RegisterController extends Controller
         flash('email deja utiliser','danger');
         return redirect()->back();
         
+        }}
+        else{
+
         }
     }
 
