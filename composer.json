@@ -14,8 +14,9 @@
         "gladcodes/keygen": "^1.1",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
-        "laravel/tinker": "^2.0",
+        "laravel/tinker": "^2.4",
         "laravel/ui": "^2.1",
+        "nexmo/client": "^2.0",
         "twilio/sdk": "^6.9"
     },
     "require-dev": {

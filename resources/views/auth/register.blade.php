@@ -2,9 +2,14 @@
 
 @section('content')
 <div class="content-section">
-    
-                    <form method="POST" action="/donor/register" id='form'>
+    @if (session()->has('message'))
+    <div class='alert alert-danger  border-danger'>
+        {{ session('message') }}
+    </div>
+    @endif
+                    <form method="POST" action="/donor/register" name="form" id='form'>
                         @csrf
+
                         <div class="form-inline ml-5 pb-2 pl-5">
                             <input type="radio" class=" d-inline-flexd ml-5" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
                             <label for="donateur"  class=" ml-1 pr-4" >Donateur</label><br>
@@ -15,29 +20,38 @@
                             
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Prenom') }}</label>
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('Association') }}</label>
+                            <div class="col-md-6 ">
+                               <SELECT class="form-control" id="association" name="association" disabled >
+                                  @foreach($associations as $association)
+                                     <option class="dropdown-item" value="{{$association->name}}"> {{$association->name}}</option>
+                                  @endforeach
+                               </SELECT>
+                           </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('Prenom') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="first_name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="first_name"  type="text" class="form-control @error('name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}"  autocomplete="name" autofocus>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {!! $errors->first('first_name','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
+                            <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="last_name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="last_name"   type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}"  autocomplete="name" autofocus>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {!! $errors->first('last_name','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
                             </div>
                         </div>
 
@@ -45,40 +59,38 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="email" type="email"  class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {!! $errors->first('email','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Tel') }}</label>
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Tel') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="phone" value="{{ old('email') }}" required autocomplete="email">
+                                <input id="phone" type="text"  class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {!! $errors->first('phone','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
+                            <label for="password"  class="col-md-4 col-form-label text-md-right">{{ __('Mot de passe') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"  autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                {!! $errors->first('password','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
+
                             </div>
                         </div>
 
@@ -86,7 +98,13 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmer le  Mot de passe') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm"   type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
+                               
+                               {!! $errors->first('password_confirmation','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
+                            
                             </div>
                         </div>
 
@@ -103,16 +121,17 @@
 <script type="text/javascript">
     function membre(){
    document.getElementById('form').action="/membre/register";
-   //document.getElementById('association').disabled=false;
+   document.getElementById('association').disabled=false;
  }
    function donor(){
    document.getElementById('form').action="/donor/register";
-   //document.getElementById('association').disabled=true;
+   document.getElementById('association').disabled=true;
  }
  function demandeur(){
    document.getElementById('form').action="/demandeur/register";
-   //document.getElementById('association').disabled=true;
+   document.getElementById('association').disabled=true;
  }
+
 </script>
 @endsection
 

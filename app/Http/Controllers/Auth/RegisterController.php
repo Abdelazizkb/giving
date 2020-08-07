@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Donor;
+use App\Activist;
+use App\Association;
 use App\Membre;
 use App\Demandeur;
 use App\Code;
-
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Twilio\Rest\Client;
 use Keygen;
 use Auth;
@@ -32,6 +34,20 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+
+
+       public function showRegistrationForm()
+    {   
+        $associations=Association::all();
+        return view('auth.register',compact('associations'));
+    }
+    public function showAdminRegisterForm()
+    {
+        return view('auth.adminregister');
+    }
+
+
+
 
     /**
      * Where to redirect users after registration.
@@ -81,7 +97,7 @@ class RegisterController extends Controller
     }
 
     protected function createDonor(RegisterFormRequest $request)
-    {   if($request->route()->named('donor-register')){
+    {   
         $mail=Donor::where('email', $request->email)->get();
         $phone=Donor::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
@@ -96,29 +112,23 @@ class RegisterController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));*/ 
-                $token ="6cb055b85632ae620ee945c04f502e09";
+                /*$token ="6cb055b85632ae620ee945c04f502e09";
                 $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
                 $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
                 $twilio_number = +12025191461;
                 
                 $client = new Client($twilio_sid, $token);
                 
-                $code = Keygen::numeric(6)->generate();
-
+               
                 $client->messages->create(
                     $request->phone,array('from'=>$twilio_number,'body' => 'Givingcom : votre code de verification '.$code)
                 );
                 $client->verify->v2->services($twilio_verify_sid)
                     ->verifications;
-                    
-                Code::create([
-                        'code' => $code,
-                        'user_id' => $donor->id,
-                        'type' => 'donor',
-                        ]);
-       
+                */    
+        $this->nexmo($donor,'donor');      
         if (Auth::guard('donor')->attempt($credentials)) {
-            return view('auth.phonecode');    
+            return redirect()->route('verify',['type'=>'donor']);    
         }
         }
         else{
@@ -131,21 +141,33 @@ class RegisterController extends Controller
         flash('email deja utiliser','danger');
         return redirect()->back();
         
-        }}
-        else{
-
         }
-    }
+     
+        }
+    
 
 
     protected function createMembre(RegisterFormRequest $request)
-    {
+    {    
+        $activist= Activist::whereEmail($request->email)->get();
+          if ($activist->isEmpty()) {
+	          flash("Le membre n'existe pas ",'danger');
+              return redirect()->back();
+           }
+         if(! ($activist->first()->association()->first()->name === $request->association) ){
+             flash("Le membre n'existe pas  dans l'association donnee , vous devez verifier l'association selectionnee ",'danger');
+             return redirect()->back();
+          }
+
+
+
+
         $mail=Membre::where('email', $request->email)->get();
         $phone=Membre::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
         
         if($phone->isEmpty()){
-         Membre::create([
+        $membre= Membre::create([
         'first_name' => $request->first_name,
         'last_name' => $request->last_name,
         'phone' => $request->phone,
@@ -172,10 +194,11 @@ class RegisterController extends Controller
                     
         
         */
+        $this->nexmo($membre,'membre');      
         if (Auth::guard('membre')->attempt($credentials)) {
         /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
-        return redirect()->route('membre');
-        }
+        return redirect()->route('verify',['type'=>'membre']);    
+    }
         }
         else{
         flash('numero telephone deja utiliser','danger');
@@ -198,7 +221,7 @@ class RegisterController extends Controller
         if($mail->isEmpty()){
         
         if($phone->isEmpty()){
-         Demandeur::create([
+        $demandeur=Demandeur::create([
         'first_name' => $request->first_name,
         'last_name' => $request->last_name,
         'phone' => $request->phone,
@@ -225,10 +248,11 @@ class RegisterController extends Controller
                     
         
         */
+        $this->nexmo($demandeur,'demandeur');      
         if (Auth::guard('demandeur')->attempt($credentials)) {
         /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
-        return redirect()->route('demandeur');
-        }
+        return redirect()->route('verify',['type'=>'demandeur']);    
+         }
         }
         else{
         flash('numero telephone deja utiliser','danger');
@@ -260,5 +284,24 @@ else{
 flash('email deja utiliser','danger');
 return redirect()->back();
 }
+}
+
+protected function nexmo($user,$type){
+    $code = Keygen::numeric(6)->generate();
+
+    $basic  = new \Nexmo\Client\Credentials\Basic('1f4fa260', 'qlrHMNC0StbGFvtY');
+    $client = new \Nexmo\Client($basic);
+
+    $message = $client->message()->send([
+      'to' => '213779247735',
+      'from' => 'Vonage APIs',
+      'text' => 'Givingcom : votre code de verification '.$code
+    ]);
+    Code::create([
+            'code' => $code,
+            'user_id' => $user->id,
+            'type' => $type,
+            ]);
+
 }
 }
