@@ -31,7 +31,7 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                @auth()
-                <a class="nav-item nav-link" href="#">profile</a>
+            <a class="nav-item nav-link" href="{{route('profile') }}">{{Auth::user()->first_name." ".Auth::user()->last_name}}</a>
                 <a class="nav-item nav-link" href="{{route('Logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" >Déconnecter</a>
                 <form id="logout-form" action="{{ route('Logout') }}" method="POST" style="display: none;">

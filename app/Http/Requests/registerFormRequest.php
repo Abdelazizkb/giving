@@ -33,7 +33,7 @@ class registerFormRequest extends FormRequest
         'password.confirmed'=>' Confirmation mot de passe échoue',
         'password.min'=>"mot de passe doit contenir minimums 6 caractères",
         'max' => 'Vous avez entre une valeur tres lang',
-
+        'image.image'=>'telechargez une photo'
     ];
 }
 
@@ -44,6 +44,7 @@ class registerFormRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'image' => 'required|image',
 
         ];
     }

@@ -7,7 +7,7 @@
         {{ session('message') }}
     </div>
     @endif
-                    <form method="POST" action="/donor/register" name="form" id='form'>
+                    <form method="POST" action="/donor/register" enctype="multipart/form-data" name="form" id='form'>
                         @csrf
 
                         <div class="form-inline ml-5 pb-2 pl-5">
@@ -107,7 +107,18 @@
                             
                             </div>
                         </div>
+                       
 
+                        <div class="form-group">
+                            <label for="image">Photo de profile</label>
+                            <input type="file" class="form-control-file" id="image" name="image">
+                            {!! $errors->first('image','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
+                          </div>
+
+                         
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn text-white orange border-orange">

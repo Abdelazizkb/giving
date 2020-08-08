@@ -17,4 +17,12 @@ class Membre extends Authenticatable
     protected $hidden = [
     'password', 'remember_token',
     ];
+
+
+    public function image()
+    {
+        return $this->morphOne('App\Image', 'imageable');
+    }
+    
+    
 }

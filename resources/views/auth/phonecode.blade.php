@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/main.css') }}">
 
    
-        <title>Verification</title>
+        <title>{{ $title ?? 'home' }}</title>
   
 </head>
 <body>

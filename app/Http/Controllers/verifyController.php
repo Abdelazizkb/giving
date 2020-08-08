@@ -15,7 +15,12 @@ use Keygen;
 class verifyController extends Controller
 {   
     use HasTimestamps;
-
+    
+    public function __construct()
+    {   
+        $this->middleware('auth:donor,membre,demandeur,admin');
+    }  
+    
     public function verifyForm($type){
         return view('auth.phonecode',compact('type'));
       }
@@ -29,7 +34,7 @@ class verifyController extends Controller
          */
          if($request->code == $code[0]->code){
                 $this->donorverify( $donor);
-                return redirect()->route('donor');
+                return redirect()->route('home');
 
          }
          else{
@@ -45,7 +50,7 @@ class verifyController extends Controller
             */
             if($request->code == $code[0]->code){
                    $this->membreverify( $membre);
-                   return redirect()->route('membre');
+                   return redirect()->route('home');
    
             }
             else{
@@ -60,7 +65,7 @@ class verifyController extends Controller
             */
             if($request->code == $code[0]->code){
                    $this->demandeurverify( $demandeur);
-                   return redirect()->route('demandeur');
+                   return redirect()->route('home');
    
             }
             else{

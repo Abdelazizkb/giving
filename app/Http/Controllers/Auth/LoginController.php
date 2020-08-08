@@ -82,7 +82,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request,$type)) {
-            return redirect()->route($type);
+            return redirect()->route('home');
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts

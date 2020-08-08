@@ -21,15 +21,12 @@ Auth::routes();
 
 
 
-Route::get('/admin', 'AdminController@index')->name('admin');
-Route::get('/membre', 'MembreController@index')->name('membre');
-Route::get('/donor', 'DonorController@index')->name('donor');
-Route::get('/demandeur', 'DemandeurController@index')->name('demandeur');
+Route::get('/home', 'HomeController@index')->name('home');
+
 
 
 
 Route::post('/donor/register', 'Auth\RegisterController@createDonor')->name('donor-register');
-
 Route::post('/membre/register', 'Auth\RegisterController@createMembre')->name('membre-register');
 Route::post('/demandeur/register', 'Auth\RegisterController@createDemandeur')->name('demandeur-register');
 
@@ -48,3 +45,5 @@ Route::post('/verify/{type}', 'verifyController@verify')->name('verify');
 Route::get('/verify/{type}', 'verifyController@verifyForm')->name('verify');
 
 Route::get('/resendcode/{type}', 'verifyController@resendcode')->name('resendcode');
+
+Route::get('/profile', 'profileController@index')->name('profile');

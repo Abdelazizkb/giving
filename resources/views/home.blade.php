@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.base',['title'=>'home'])
 
 @section('content')
 <div class="container">
@@ -14,7 +14,16 @@
                         </div>
                     @endif
 
+                    @auth('donor')                       
+                        {{ __('You are logged in! as donor') }}
+                    @endauth
+                    @auth('membre')
+                    {{ __('You are logged in! as membre') }}
+                    @endauth
+                    @auth('demandeur')
                     {{ __('You are logged in! as demandeur') }}
+                    @endauth
+
                 </div>
             </div>
         </div>

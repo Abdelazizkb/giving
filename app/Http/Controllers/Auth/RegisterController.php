@@ -11,10 +11,13 @@ use App\Association;
 use App\Membre;
 use App\Demandeur;
 use App\Code;
+use App\Image;
+use File;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Twilio\Rest\Client;
 use Keygen;
 use Auth;
+use Str;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -96,9 +99,19 @@ class RegisterController extends Controller
         ]);
     }
 
+
+
+
     protected function createDonor(RegisterFormRequest $request)
     {   
+        
+
+       // verifier si l'email est deja utilise 
+
         $mail=Donor::where('email', $request->email)->get();
+
+        // verifier si le telephone est deja utilise 
+ 
         $phone=Donor::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
         
@@ -110,23 +123,29 @@ class RegisterController extends Controller
         'email' => $request->email,
         'password' => Hash::make($request->password),
         ]);
+
+       
+        
+     
+        //makeing profile picture
+
+        if($request->hasFile('image')){
+            $destination='public';
+            $image=$request->file('image');
+       
+            $path=$request->file('image')->store($destination);
+        }
+       
+        $path=Str::substr($path, 7);
+        Image::Create(['image'=>$path,'imageable_id'=>$donor->id,'imageable_type'=>'App\Donor']);
+        
+        // send confermation sms
+        $this->nexmo($donor,'donor');  
+
+
+
         $credentials = $request->only('email', 'password');
-        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));*/ 
-                /*$token ="6cb055b85632ae620ee945c04f502e09";
-                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
-                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
-                $twilio_number = +12025191461;
-                
-                $client = new Client($twilio_sid, $token);
-                
-               
-                $client->messages->create(
-                    $request->phone,array('from'=>$twilio_number,'body' => 'Givingcom : votre code de verification '.$code)
-                );
-                $client->verify->v2->services($twilio_verify_sid)
-                    ->verifications;
-                */    
-        $this->nexmo($donor,'donor');      
+    
         if (Auth::guard('donor')->attempt($credentials)) {
             return redirect()->route('verify',['type'=>'donor']);    
         }
@@ -174,27 +193,26 @@ class RegisterController extends Controller
         'email' => $request->email,
         'password' => Hash::make($request->password),
         ]);
-        $credentials = $request->only('email', 'password');
-        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
-                $token ="6cb055b85632ae620ee945c04f502e09";
-                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
-                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
-                $twilio_number = +12025191461;
-                $client = new Client($twilio_sid, $token);
-                $client->messages->create(
-                    // Where to send a text message (your cell phone?)
-                     $request->phone,
-                  array(
-                'from' => $twilio_number,
-                'body' => 'I sent this message in under 10 minutes!'
-                   )
-               );
-                $client->verify->v2->services($twilio_verify_sid)
-                    ->verifications;
-                    
+       
+       
+        //makeing profile picture
+
+       if($request->hasFile('image')){
+        $destination='public';
+        $image=$request->file('image');
+   
+        $path=$request->file('image')->store($destination);
+         }
+   
+        $path=Str::substr($path, 7);
+        Image::Create(['image'=>$path,'imageable_id'=>$membre->id,'imageable_type'=>'App\Membre']);
+    
+        // send confermation sms
+
+        $this->nexmo($membre,'membre');  
         
-        */
-        $this->nexmo($membre,'membre');      
+        $credentials = $request->only('email', 'password');
+
         if (Auth::guard('membre')->attempt($credentials)) {
         /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
         return redirect()->route('verify',['type'=>'membre']);    
@@ -228,27 +246,27 @@ class RegisterController extends Controller
         'email' => $request->email,
         'password' => Hash::make($request->password),
         ]);
-        $credentials = $request->only('email', 'password');
-        /*Mail::to($request->email)->send(new DonorVerificationMail(encrypt($request->email),encrypt($request->password)));
-                $token ="6cb055b85632ae620ee945c04f502e09";
-                $twilio_sid ="AC76a134ec8d5e62f17952428d9da343f2";
-                $twilio_verify_sid ="VA4571b3c7072fdae8c962bf31b6c826aa";
-                $twilio_number = +12025191461;
-                $client = new Client($twilio_sid, $token);
-                $client->messages->create(
-                    // Where to send a text message (your cell phone?)
-                     $request->phone,
-                  array(
-                'from' => $twilio_number,
-                'body' => 'I sent this message in under 10 minutes!'
-                   )
-               );
-                $client->verify->v2->services($twilio_verify_sid)
-                    ->verifications;
-                    
+       
         
-        */
+        
+        //makeing profile picture
+
+       if($request->hasFile('image')){
+        $destination='public';
+        $image=$request->file('image');
+   
+        $path=$request->file('image')->store($destination);
+         }
+   
+        $path=Str::substr($path, 7);
+        Image::Create(['image'=>$path,'imageable_id'=>$demandeur->id,'imageable_type'=>'App\Demandeur']);
+    
+        // send confermation sms
+
         $this->nexmo($demandeur,'demandeur');      
+        
+        $credentials = $request->only('email', 'password');
+
         if (Auth::guard('demandeur')->attempt($credentials)) {
         /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
         return redirect()->route('verify',['type'=>'demandeur']);    

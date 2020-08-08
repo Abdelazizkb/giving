@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Date;
+use Auth as Auth;
+
 if(!function_exists('flash')){
 function flash($message,$type){
 session()->flash('message',$message);
@@ -36,3 +38,20 @@ else
 	return "";
 }
 }};
+/*
+if(!function_exists('loggedin')){
+    if(Auth::guard('donor')->check()){
+      return true;
+	}
+	if(Auth::guard('membre')->check()){
+		return true;
+	  }
+      if(Auth::guard('demandeur')->check()){
+		return true;
+	  }
+	  if(Auth::guard('admin')->check()){
+		return true;
+	  }
+	};
+
+*/
