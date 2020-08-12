@@ -24,5 +24,9 @@ class Membre extends Authenticatable
         return $this->morphOne('App\Image', 'imageable');
     }
     
+    public function code()
+{
+    return $this->morphOne('App\Code', 'codeable');
+}
     
 }

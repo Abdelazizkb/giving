@@ -140,7 +140,7 @@ class RegisterController extends Controller
         Image::Create(['image'=>$path,'imageable_id'=>$donor->id,'imageable_type'=>'App\Donor']);
         
         // send confermation sms
-        $this->nexmo($donor,'donor');  
+        $this->nexmo($donor,'App\Donor');  
 
 
 
@@ -209,7 +209,7 @@ class RegisterController extends Controller
     
         // send confermation sms
 
-        $this->nexmo($membre,'membre');  
+        $this->nexmo($membre,'App\Membre');  
         
         $credentials = $request->only('email', 'password');
 
@@ -263,7 +263,7 @@ class RegisterController extends Controller
     
         // send confermation sms
 
-        $this->nexmo($demandeur,'demandeur');      
+        $this->nexmo($demandeur,'App\Demandeur');      
         
         $credentials = $request->only('email', 'password');
 
@@ -305,21 +305,20 @@ return redirect()->back();
 }
 
 protected function nexmo($user,$type){
-    $code = Keygen::numeric(6)->generate();
+    $code = Code::firstOrCreate(['codeable_type'=>$type,'codeable_id'=>$user->id ],
+    ['code' => Keygen::numeric(6)->generate()]
+    );
 
-    $basic  = new \Nexmo\Client\Credentials\Basic('1f4fa260', 'qlrHMNC0StbGFvtY');
+    $basic  = new \Nexmo\Client\Credentials\Basic('1ebd6fa8', 'gx9J1TgFE0a5sN3Z');
     $client = new \Nexmo\Client($basic);
 
     $message = $client->message()->send([
-      'to' => '213779247735',
+      'to' => '213541259036',
       'from' => 'Vonage APIs',
       'text' => 'Givingcom : votre code de verification '.$code
     ]);
-    Code::create([
-            'code' => $code,
-            'user_id' => $user->id,
-            'type' => $type,
-            ]);
+    
+  
 
 }
 }

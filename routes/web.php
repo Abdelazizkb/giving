@@ -47,3 +47,16 @@ Route::get('/verify/{type}', 'verifyController@verifyForm')->name('verify');
 Route::get('/resendcode/{type}', 'verifyController@resendcode')->name('resendcode');
 
 Route::get('/profile', 'profileController@index')->name('profile');
+
+
+
+
+Route::post('/password/{type}', 'Auth\ResetPasswordController@search')->name('password-search');
+
+
+Route::post('/password/confirm/{type}', 'Auth\ResetPasswordController@confirm')->name('password-confirm');
+
+Route::post('/password', 'Auth\ResetPasswordController@reset')->name('password-reset');
+
+
+Route::get('/password/{type}/{phone}', 'Auth\ResetPasswordController@showresetForm')->name('password-reset-form');

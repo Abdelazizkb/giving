@@ -16,9 +16,7 @@ class CreateCodesTable extends Migration
         Schema::create('codes', function (Blueprint $table) {
             $table->id();
             $table->string('code');
-            $table->string('type');
-            $table->bigInteger('user_id');      
-            $table->timestamps();
+            $table->morphs('codeable');      
         });
     }
 

@@ -23,5 +23,8 @@ public function image()
 {
     return $this->morphOne('App\Image', 'imageable');
 }
-
+public function code()
+{
+    return $this->morphOne('App\Code', 'codeable');
+}
 }
