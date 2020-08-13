@@ -8,5 +8,8 @@ use Illuminate\Notifications\Notifiable;
 
 class Representant extends Authenticatable
 {
-    use Notifiable;
+    
+    protected $tabel='membres';
+    protected $guard = 'representant';
+ 
 }

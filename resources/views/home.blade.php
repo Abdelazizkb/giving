@@ -23,6 +23,9 @@
                     @auth('demandeur')
                     {{ __('You are logged in! as demandeur') }}
                     @endauth
+                    @auth('representant')
+                    {{ __('You are logged in! as representant') }}
+                    @endauth
 
                 </div>
             </div>

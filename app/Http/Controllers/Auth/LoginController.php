@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
 use Auth;
+use App\Membre;
 class LoginController extends Controller
 {
     /*
@@ -80,10 +81,12 @@ class LoginController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
+      
 
         if ($this->attemptLogin($request,$type)) {
             return redirect()->route('home');
         }
+        
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this

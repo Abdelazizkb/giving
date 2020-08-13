@@ -67,21 +67,24 @@ public function confirm(Request $request,$type){
 
 
 public function search(Request $request,$type){
-
+$user='';
 if($type=='donor'){
  $user=Donor::wherePhone($request->phone)->first(); 
- $this->nexmo($user,'App\Donor'); 
-
+ $morphetype='App\Donor';
 }
 if($type=='demandeur'){
     $user=Demandeur::wherePhone($request->phone)->first(); 
-    $this->nexmo($user,'App\Demandeur'); 
+    $morphetype='App\Demandeur';
 }
 if($type=='membre'){
     $user=Membre::wherePhone($request->phone)->first(); 
-    $this->nexmo($user,'App\Membre');
-}
+    $morphetype='App\Membre';
 
+}
+if($user=='')
+return redirect()->back();
+
+$this->nexmo($user,$morphetype); 
 return view('auth.passwords.confirm', compact(['user','type']));
 }
 
@@ -128,7 +131,7 @@ protected function nexmo($user,$type){
                            ['code' => Keygen::numeric(6)->generate()]
                            );
 
-    $basic  = new \Nexmo\Client\Credentials\Basic('1f4fa260', 'qlrHMNC0StbGFvtY');
+   /* $basic  = new \Nexmo\Client\Credentials\Basic('1f4fa260', 'qlrHMNC0StbGFvtY');
     $client = new \Nexmo\Client($basic);
 
     $message = $client->message()->send([
@@ -136,7 +139,7 @@ protected function nexmo($user,$type){
       'from' => 'Vonage APIs',
       'text' => 'Givingcom : votre code de verification '.$code->code
     ]);
-  
+  */
     }
 
 

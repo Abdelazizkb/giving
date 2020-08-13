@@ -184,7 +184,8 @@ class RegisterController extends Controller
         $mail=Membre::where('email', $request->email)->get();
         $phone=Membre::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
-        
+            
+
         if($phone->isEmpty()){
         $membre= Membre::create([
         'first_name' => $request->first_name,
@@ -192,9 +193,8 @@ class RegisterController extends Controller
         'phone' => $request->phone,
         'email' => $request->email,
         'password' => Hash::make($request->password),
+        'is_super'=>$activist->first()->is_super,
         ]);
-       
-       
         //makeing profile picture
 
        if($request->hasFile('image')){
@@ -209,12 +209,15 @@ class RegisterController extends Controller
     
         // send confermation sms
 
-        $this->nexmo($membre,'App\Membre');  
+       $this->nexmo($membre,'App\Membre');  
         
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('membre')->attempt($credentials)) {
         /**Notification::send(Auth::guard('donor')->user(),new ResetNotification());**/
+        if($membre->is_super)
+        Auth::guard('representant')->attempt($credentials);
+
         return redirect()->route('verify',['type'=>'membre']);    
     }
         }
@@ -309,7 +312,7 @@ protected function nexmo($user,$type){
     ['code' => Keygen::numeric(6)->generate()]
     );
 
-    $basic  = new \Nexmo\Client\Credentials\Basic('1ebd6fa8', 'gx9J1TgFE0a5sN3Z');
+  /*  $basic  = new \Nexmo\Client\Credentials\Basic('1ebd6fa8', 'gx9J1TgFE0a5sN3Z');
     $client = new \Nexmo\Client($basic);
 
     $message = $client->message()->send([
@@ -318,7 +321,7 @@ protected function nexmo($user,$type){
       'text' => 'Givingcom : votre code de verification '.$code
     ]);
     
-  
+  */
 
 }
 }

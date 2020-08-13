@@ -53,7 +53,7 @@
           
           @yield('content')
         </div>
-        @auth()
+        @if(Auth::guard()->check())
         <div class="col-md-4">
           <div class="content-section">
             <h3>Our Sidebar</h3>
@@ -67,7 +67,7 @@
             </p>
           </div>
         </div>
-        @endauth()
+        @endif
         
       </div>
     </main>

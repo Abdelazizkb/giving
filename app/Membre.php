@@ -12,7 +12,7 @@ class Membre extends Authenticatable
     protected $guard = 'membre';
     protected $primaryKey='id';
     protected $fillable = [
-    'name', 'email', 'password','first_name','last_name','phone'
+    'name', 'email', 'password','first_name','last_name','phone','is_super'
     ];
     protected $hidden = [
     'password', 'remember_token',
@@ -25,8 +25,8 @@ class Membre extends Authenticatable
     }
     
     public function code()
-{
-    return $this->morphOne('App\Code', 'codeable');
-}
+    {
+        return $this->morphOne('App\Code', 'codeable');
+    }
     
 }
