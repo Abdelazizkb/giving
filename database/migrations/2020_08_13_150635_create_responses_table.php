@@ -15,6 +15,10 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
+            $table->longText('body');
+            $table->morphs('responseable');
+            $table->bigInteger('publication_id')->unsigned();
+            $table->foreign('publication_id')->references('id')->on('publications')->onDelete('cascade');
             $table->timestamps();
         });
     }

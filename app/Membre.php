@@ -28,5 +28,8 @@ class Membre extends Authenticatable
     {
         return $this->morphOne('App\Code', 'codeable');
     }
-    
+    public function publications()
+{
+    return $this->morphMany('App\Publication', 'publicatable');
+}
 }

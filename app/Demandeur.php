@@ -27,4 +27,8 @@ public function code()
 {
     return $this->morphOne('App\Code', 'codeable');
 }
+public function publications()
+{
+    return $this->morphMany('App\Publication', 'publicatable');
+}
 }

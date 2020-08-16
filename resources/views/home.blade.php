@@ -1,35 +1,33 @@
-@extends('layouts.base',['title'=>'home'])
+@extends('layouts.base')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<article class="media content-section">
+<a class="btn font-orange border-orange  " href="{{route('publication.create')}}">Cree votre publication </a>
 
-                    @auth('donor')                       
-                        {{ __('You are logged in! as donor') }}
-                    @endauth
-                    @auth('membre')
-                    {{ __('You are logged in! as membre') }}
-                    @endauth
-                    @auth('demandeur')
-                    {{ __('You are logged in! as demandeur') }}
-                    @endauth
-                    @auth('representant')
-                    {{ __('You are logged in! as representant') }}
-                    @endauth
+</article>
 
-                </div>
-            </div>
-        </div>
+
+@foreach($publications as $publication)
+
+<article class="media content-section">
+  <img class="rounded-circle article-img" src="{{asset('storage/'.$publication->publicatable->image->image )}}">
+    <div class="media-body">
+      <div class="article-metadata">
+       
+     <a class="mr-2" href="{{route('profile-visite',['user'=> $publication])}}">
+          {{ $publication->publicatable->first_name  }}
+     </a>
+        <small class="text-muted">{{ $publication->created_at }}</small>
+      </div>
+      <h2><a class="article-title" href="{{route('publication.show',[$publication])}}">{{ $publication->title }}</a></h2>
+      <p class="article-content">content</p>
     </div>
-</div>
+    <img src="{{asset('storage/'.$publication->image->image)}}" alt="" class="col-md-8  d-inline">
+</article>
+
+
+  @endforeach
+
+
 @endsection

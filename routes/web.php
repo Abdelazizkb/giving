@@ -48,6 +48,7 @@ Route::get('/resendcode/{type}', 'verifyController@resendcode')->name('resendcod
 
 Route::get('/profile', 'profileController@index')->name('profile');
 
+Route::get('/profile/{user}', 'profileController@profile')->name('profile-visite');
 
 
 
@@ -60,3 +61,6 @@ Route::post('/password', 'Auth\ResetPasswordController@reset')->name('password-r
 
 
 Route::get('/password/{type}/{phone}', 'Auth\ResetPasswordController@showresetForm')->name('password-reset-form');
+
+
+Route::resource('publication', 'PublicationController');
