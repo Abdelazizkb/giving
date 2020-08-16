@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Publication;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreatePublicationRequest;
+
 use App\Domain;
 use App\Category;
 use Auth;
 use Str;
+use Flashy;
 use App\Image;
 
 class PublicationController extends Controller
@@ -44,7 +47,7 @@ class PublicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePublicationRequest $request)
     {
        
       $publication=Publication::create([
@@ -67,7 +70,8 @@ class PublicationController extends Controller
         Image::Create(['image'=>$path,'imageable_id'=>$publication->id,'imageable_type'=>'App\Publication']);   
     }
    
-    
+    Flashy::success('La publication a été créée');
+
       return redirect()->route('publication.show',compact('publication')); 
 
     }
@@ -103,7 +107,7 @@ class PublicationController extends Controller
      * @param  \App\Publications  $publications
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Publication $publication)
+    public function update(CreatePublicationRequest $request, Publication $publication)
     {
      $publication->title=$request->title;
      $publication->body=$request->body;
@@ -121,6 +125,7 @@ class PublicationController extends Controller
     }
    
    
+    Flashy::success('La publication a été mise à jour');
 
     return redirect()->route('publication.show',['publication'=>$publication]);
     
@@ -135,6 +140,8 @@ class PublicationController extends Controller
      */
     public function destroy(Publication $publication)
     {
+    Flashy::success('La publication a été supprimée');
+
     $publication->delete();
      return redirect()->home();
     }

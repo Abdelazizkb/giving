@@ -59,6 +59,9 @@
         
       </div>
     </main>
+    <script src="//code.jquery.com/jquery.js"></script>
+
+    @include('flashy::message')
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
