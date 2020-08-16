@@ -107,7 +107,7 @@ class PublicationController extends Controller
      * @param  \App\Publications  $publications
      * @return \Illuminate\Http\Response
      */
-    public function update(CreatePublicationRequest $request, Publication $publication)
+    public function update(Request $request, Publication $publication)
     {
      $publication->title=$request->title;
      $publication->body=$request->body;
