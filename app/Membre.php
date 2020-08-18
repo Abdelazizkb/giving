@@ -32,4 +32,8 @@ class Membre extends Authenticatable
 {
     return $this->morphMany('App\Publication', 'publicatable');
 }
+public function Response()
+{
+    return $this->morphMany('App\Response', 'responseable');
+}   
 }

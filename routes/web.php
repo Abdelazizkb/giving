@@ -64,3 +64,4 @@ Route::get('/password/{type}/{phone}', 'Auth\ResetPasswordController@showresetFo
 
 
 Route::resource('publication', 'PublicationController');
+Route::resource('response', 'ResponseController')->except(['index','create']);

@@ -23,7 +23,10 @@ class Publication extends Model
     {
         return $this->belongsTo('App\Category');
     }
-
+    public function responses()
+    {
+        return $this->hasMany('App\Response');
+    }
 
     public function image()
     {

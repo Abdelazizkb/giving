@@ -1,22 +1,21 @@
 @extends('layouts.base',['title'=>"S'inscrir"])
 
 @section('content')
-<div class="content-section">
     @if (session()->has('message'))
     <div class='alert alert-danger  border-danger'>
         {{ session('message') }}
     </div>
     @endif
-                    <form method="POST" action="/donor/register" enctype="multipart/form-data" name="form" id='form'>
+                    <form method="POST" class="col-md-12" action="/donor/register" enctype="multipart/form-data" name="form" id='form'>
                         @csrf
 
                         <div class="form-inline ml-5 pb-2 pl-5">
                             <input type="radio" class=" d-inline-flexd ml-5" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
-                            <label for="donateur"  class=" ml-1 pr-4" >Donateur</label><br>
-                            <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
-                            <label class="ml-1 pr-4" for="female" >Membre</label><br>
-                            <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="demandeur()">
-                            <label class=" ml-1 pr-4" for="female" >demandeur</label><br>
+                            <label for="donateur"  class="col-md-2 ml-1 pr-4" >Donateur</label><br>
+                            <input type="radio"  id="membre"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
+                            <label class="ml-1 pr-4" for="membre" >Membre</label><br>
+                            <input type="radio"  id="demandeur"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="demandeur()">
+                            <label class=" ml-1 pr-4" for="demandeur" >demandeur</label><br>
                             
                         </div>
                         <div class="form-group row">
@@ -128,7 +127,7 @@
                         </div>
                     </form>
                 
-</div>
+
 <script type="text/javascript">
     function membre(){
    document.getElementById('form').action="/membre/register";

@@ -1,11 +1,13 @@
 body {
-    background: #fafafa;
+    background: #ffffff;
     color: #333333;
     margin-top: 5rem;
   }
   
   h1, h2, h3, h4, h5, h6 {
     color: #444444;
+    word-break: break-all;
+
   }
   
   ul {
@@ -13,9 +15,14 @@ body {
   }
   
   .bg-steel {
-    background-color: #1f94bd;
+    background-color: #00887a;
   }
-  
+  .image-header{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    
+  }
   .site-header .navbar-nav .nav-link {
     color: #cbd5db;
   }
@@ -35,7 +42,10 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
   }
-  
+  .content-section p{
+    word-break: break-all;
+
+  }
   .article-title {
     color: #444444;
   }

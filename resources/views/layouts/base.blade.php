@@ -21,8 +21,8 @@
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-        <a class="navbar-brand mr-4" href="{{ url('/') }}" > <img src="{{asset('img/mylogo.PNG')}}" height="40px" alt=""></a>
+        <div class="container-fluid">
+        <a class="navbar-brand mr-4 " href="{{ url('/') }}" >Giving</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
@@ -49,6 +49,8 @@
         </div>
       </nav>
     </header>
+ <!-- <img  width="70%" height="500px" class="image-header"  margin="0 auto"  alt="kljlk">
+ -->
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
