@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Publication;
+use App\Annonce;
+use App\Domain;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -12,8 +15,10 @@ class HomeController extends Controller
     }   
 
     public function index()
-    {   $publications=Publication::get();
-        return view('home',compact('publications'));
+    {   $annonces=Annonce::limit(5)->get();
+        $publications=Publication::get();
+        $domains=Domain::get();
+        return view('home',compact('publications','annonces','domains'));
     }
 
 

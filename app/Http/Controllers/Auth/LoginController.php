@@ -81,9 +81,17 @@ class LoginController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
-      
+
+
+
+        
+            // Authentication passed...
+       
+            
+            
 
         if ($this->attemptLogin($request,$type)) {
+            $this->representantLogin($type,Auth::guard($type)->user(),$request);
             return redirect()->route('home');
         }
         
@@ -126,6 +134,14 @@ class LoginController extends Controller
         return $request->wantsJson()
             ? new Response('', 204)
             : redirect('/');
+    }
+    protected function representantLogin($type ,$user,$request){
+        if($type=='membre' and $user->is_super==1 ){
+    
+        $credentials = $request->only('phone', 'password');
+
+        Auth::guard('representant')->attempt($credentials);
+        }
     }
 
 }

@@ -102,7 +102,7 @@ return [
         ],
          'representants' => [
             'driver' => 'eloquent',
-            'model' => App\Representant::class,
+            'model' => App\Membre::class,
         ],
         'demandeurs' => [
             'driver' => 'eloquent',

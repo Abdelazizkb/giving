@@ -46,9 +46,17 @@ Route::get('/verify/{type}', 'verifyController@verifyForm')->name('verify');
 
 Route::get('/resendcode/{type}', 'verifyController@resendcode')->name('resendcode');
 
+
+
+Route::get('/confirm/{type}/{user}', 'Auth\ResetPasswordController@resendcode')->name('resendcode-confirm');
+
+
+
+
 Route::get('/profile', 'profileController@index')->name('profile');
 
 Route::get('/profile/{user}', 'profileController@profile')->name('profile-visite');
+Route::get('/response/profile/{user}', 'profileController@profileResponse')->name('profile-resposeable');
 
 
 
@@ -63,5 +71,10 @@ Route::post('/password', 'Auth\ResetPasswordController@reset')->name('password-r
 Route::get('/password/{type}/{phone}', 'Auth\ResetPasswordController@showresetForm')->name('password-reset-form');
 
 
-Route::resource('publication', 'PublicationController');
+Route::resource('publication', 'PublicationController')->except(['index']);
 Route::resource('response', 'ResponseController')->except(['index','create']);
+Route::resource('annonce', 'AnnonceController');
+Route::resource('association', 'AssociationController')->only(['index','show','update','edit']);
+Route::resource('domain', 'DomainController')->only(['store']);
+
+Route::get('publication/filter/{domain}', 'PublicationController@filter')->name('filter');

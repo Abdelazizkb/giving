@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class Representant extends Authenticatable
 {
     
-    protected $tabel='membres';
-    protected $guard = 'representant';
+    public $tabel='membres';
+    public $guard = 'representant';
  
 }

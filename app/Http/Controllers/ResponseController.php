@@ -72,11 +72,13 @@ class ResponseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Response $response)
-    {
+    { 
+      
       $response->body=$request->body;
       $response->save();
       Flashy::success('Le commentaire a été modifiee');
       return redirect()->back(); 
+
     }
 
     /**
@@ -93,6 +95,8 @@ class ResponseController extends Controller
          return redirect()->back();
 
     }
+
+
     protected function publicatable_Type(){
         if(Auth::guard('donor')->check())
         return 'App\Donor';
@@ -102,4 +106,7 @@ class ResponseController extends Controller
         return 'App\Demandeur';
 
     }
+
+
+
 }

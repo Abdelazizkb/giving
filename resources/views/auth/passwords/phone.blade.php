@@ -3,7 +3,7 @@
 @section('content')
 
             <div class="card">
-                <div class="card-header">{{ __('Retrouvez votre compte') }}</div>
+                <div class="card-header bg-white">{{ __('Retrouvez votre compte') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -39,8 +39,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                                <button type="submit" class="btn btn-default text-white orange">
+                                    {{ __('Confirmer') }}
                                 </button>
                             </div>
                         </div>

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Publication;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreatePublicationRequest;
-
 use App\Domain;
 use App\Category;
+use App\Annonce;
 use Auth;
 use Str;
 use Flashy;
@@ -25,9 +25,14 @@ class PublicationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function filter($domain)
+    {   
+        $annonces=Annonce::limit(5)->get();
+        $domain=Domain::where('name',$domain)->get()->first()->id;
+        $publications=Publication::where('domain_id',$domain)->get();
+        $domains=Domain::get();
+        return view('home',compact(['publications','domains','annonces']));
+
     }
 
     /**
@@ -49,11 +54,11 @@ class PublicationController extends Controller
      */
     public function store(CreatePublicationRequest $request)
     {
-       
+      $domain=Domain::firstOrCreate(['name'=>$request->domain]); 
       $publication=Publication::create([
       'title'=>$request->title,
       'body'=>$request->body,
-      'domain_id'=>$request->domain,
+      'domain_id'=>$domain->id,
       'category_id'=>$request->category,
       'publicatable_type'=> ($this->publicatable_Type()),
       'publicatable_id'=>Auth::user()->id

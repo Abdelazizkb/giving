@@ -173,7 +173,7 @@ class RegisterController extends Controller
 	          flash("Le membre n'existe pas ",'danger');
               return redirect()->back();
            }
-         if(! ($activist->first()->association()->first()->name === $request->association) ){
+         if(! ""+$activist->first()->association_id === $request->association ){
              flash("Le membre n'existe pas  dans l'association donnee , vous devez verifier l'association selectionnee ",'danger');
              return redirect()->back();
           }
@@ -184,8 +184,6 @@ class RegisterController extends Controller
         $mail=Membre::where('email', $request->email)->get();
         $phone=Membre::where('phone', $request->phone)->get();
         if($mail->isEmpty()){
-            
-
         if($phone->isEmpty()){
         $membre= Membre::create([
         'first_name' => $request->first_name,
@@ -194,6 +192,7 @@ class RegisterController extends Controller
         'email' => $request->email,
         'password' => Hash::make($request->password),
         'is_super'=>$activist->first()->is_super,
+        'association_id'=>$activist->first()->association_id,
         ]);
         //makeing profile picture
 

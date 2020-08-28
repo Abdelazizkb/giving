@@ -12,7 +12,7 @@ class Membre extends Authenticatable
     protected $guard = 'membre';
     protected $primaryKey='id';
     protected $fillable = [
-    'name', 'email', 'password','first_name','last_name','phone','is_super'
+    'name', 'email', 'password','first_name','last_name','phone','is_super','association_id'
     ];
     protected $hidden = [
     'password', 'remember_token',
@@ -36,4 +36,9 @@ public function Response()
 {
     return $this->morphMany('App\Response', 'responseable');
 }   
+
+public function association()
+{
+    return $this->belongsTo('App\Association');
+}
 }

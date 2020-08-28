@@ -17,4 +17,19 @@ class Association extends Model
     public function membres(){
         return $this->hasMany('App\Membre');
      }
+ 
+     public function annonces()
+     {
+         return $this->hasMany('App\Annonce');
+     }
+     
+     public function image()
+     {
+         return $this->morphOne('App\Image', 'imageable');
+     }
+
+
+
+
+
 }

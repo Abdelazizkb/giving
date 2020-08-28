@@ -7,6 +7,7 @@ use App\Donor;
 use App\Membre;
 use App\Demandeur;
 use App\Publication;
+use App\Response;
 
 class profileController extends Controller
 {
@@ -35,6 +36,13 @@ public function profile($user){
      $user=Publication::where('id',$user)->first()->publicatable;
      return view('profile',compact('user'));
  }
+
+
+public function profileResponse($user){
+    
+    $user=Response::where('id',$user)->first()->responseable;
+    return view('profile',compact('user'));
+}
 
 
 }

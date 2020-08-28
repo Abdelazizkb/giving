@@ -1,29 +1,41 @@
 @extends('layouts.base',['title'=>"S'inscrir"])
 
 @section('content')
+<div class="content-section justify-content-center">
+
     @if (session()->has('message'))
     <div class='alert alert-danger  border-danger'>
         {{ session('message') }}
     </div>
     @endif
-                    <form method="POST" class="col-md-12" action="/donor/register" enctype="multipart/form-data" name="form" id='form'>
+                    <form method="POST" class="justify-content-center pb-3" action="/donor/register" enctype="multipart/form-data" name="form" id='form'>
                         @csrf
+ 
+                        <div class="d-flex justify-content-center">
+                        <label  class="ml-5 mt-2 mb-2 " for="image"><img class="rounded-circle ml-2" src="{{asset('img/user.png')}}" alt=""></label>
+                            <input type="file" hidden class="form-control-file" id="image" name="image">
+                            {!! $errors->first('image','
+                                <div class="text-danger p2" role="alert">
+                                    <strong> :message </strong>
+                                </div>')!!}
+                          </div>
 
-                        <div class="form-inline ml-5 pb-2 pl-5">
+                        <div class="form-inline ml-5 pb-2 pl-5 d-flex justify-content-center">
                             <input type="radio" class=" d-inline-flexd ml-5" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
-                            <label for="donateur"  class="col-md-2 ml-1 pr-4" >Donateur</label><br>
-                            <input type="radio"  id="membre"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
+                            <label for="donateur"  class=" ml-1 pr-4" >Donateur</label><br>
+                            <input type="radio"  id="respresentant_check" class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
                             <label class="ml-1 pr-4" for="membre" >Membre</label><br>
-                            <input type="radio"  id="demandeur"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="demandeur()">
+                            <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="demandeur" name="gender" value="female"   onclick="demandeur()">
                             <label class=" ml-1 pr-4" for="demandeur" >demandeur</label><br>
                             
                         </div>
+                        
                         <div class="form-group row">
                             <label for="first_name" class="col-md-4 col-form-label text-md-right">{{ __('Association') }}</label>
                             <div class="col-md-6 ">
                                <SELECT class="form-control" id="association" name="association" disabled >
                                   @foreach($associations as $association)
-                                     <option class="dropdown-item" value="{{$association->name}}"> {{$association->name}}</option>
+                                     <option class="dropdown-item" value="{{$association->id}}"> {{$association->name}}</option>
                                   @endforeach
                                </SELECT>
                            </div>
@@ -108,38 +120,32 @@
                         </div>
                        
 
-                        <div class="form-group">
-                            <label for="image">Photo de profile</label>
-                            <input type="file" class="form-control-file" id="image" name="image">
-                            {!! $errors->first('image','
-                                <div class="text-danger p2" role="alert">
-                                    <strong> :message </strong>
-                                </div>')!!}
-                          </div>
+                       
 
                          
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mb-0 ">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn text-white orange border-orange">
+                                <button type="submit" class="btn text-white orange col-md-12  " >
                                     {{ __('Register') }}
                                 </button>
                             </div>
                         </div>
                     </form>
                 
-
+</div>
 <script type="text/javascript">
     function membre(){
+        document.getElementById('association').disabled=false;
+
    document.getElementById('form').action="/membre/register";
-   document.getElementById('association').disabled=false;
  }
    function donor(){
-   document.getElementById('form').action="/donor/register";
-   document.getElementById('association').disabled=true;
+    document.getElementById('association').disabled=true;
+    document.getElementById('form').action="/donor/register";
  }
  function demandeur(){
+    document.getElementById('association').disabled=true;
    document.getElementById('form').action="/demandeur/register";
-   document.getElementById('association').disabled=true;
  }
 
 </script>

@@ -13,8 +13,8 @@
         
         @if($publication->publicatable->id == Auth::guard($type)->user()->id and ('app\\'.$type)==strtolower($publication->publicatable_type) ) 
         <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{route('publication.edit',['publication'=>$publication])}}" >Update</a>
-            <button class="btn btn-danger btn-sm mt-1 mb-1" form="delete">Delete</button>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{route('publication.edit',['publication'=>$publication])}}" >Modifier</a>
+            <button class="btn btn-danger btn-sm mt-1 mb-1" form="delete">Supprimer</button>
           </div>
         @endif
       </div>
@@ -25,7 +25,16 @@
   </article>
 
 
+@if($publication->responses->isEmpty())
+    
 
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Bienvenue {{Auth::guard($type)->user()->first_name}}!</strong> y'a aucune reponse encore
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif 
   <!-- boucle pour afficher les commentaire -->
 
  @foreach ($publication->responses as $response)
@@ -35,7 +44,7 @@
     <img class="rounded-circle article-img" src="{{asset('storage/'.$response->responseable->image->image )}}">
     <div class="media-body">
       <div class="article-metadata">
-      <a class="mr-2" href="{{route('profile-visite',['user'=> $publication])}}">
+      <a class="mr-2" href="{{route('profile-resposeable',['user'=> $response])}}">
         {{ $response->responseable->first_name  }}
       </a>
         <small class="text-muted">{{ $response->created_at }}</small>
@@ -44,27 +53,17 @@
       <p id="responsebody{{$response->id}}" class="article-content">{{ $response->body }}</p>
       </div>
       @if($response->responseable->id == Auth::guard($type)->user()->id and ('app\\'.$type)==strtolower($response->responseable_type) ) 
-      <button class="btn btn-default text-primary" id="btnmodifier{{$response->id}}" onclick="modifier({{$response->id}})">Modifier</button>
-      <button class="btn btn-default text-primary" id="btnsupprimer{{$response->id}}" form="delete.comment">Supprimer</button>
+      <button class="btn btn-default text-primary" id="btnmodifier{{$response->id}}" onclick="modifier({{$response}})">Modifier</button>
+      <button class="btn btn-default text-primary" id="btnsupprimer{{$response->id}}" onclick="drop({{$response}})" >Supprimer</button>
      @endif
     </div>
   </article>
   
-  <!-- formulaire pour modifier la reponse specifiee-->
-  <form action="{{route('response.update',['response'=>$response])}}" method="post" id="update.comment" >
-    @method('put')
-    @csrf
-   </form>
-
-
-     <!-- formulaire pour supprimer la reponse specifiee-->
-
-  <form action="{{route('response.destroy',['response'=>$response])}}" method="post" id="delete.comment" onsubmit="return confirm('Etse-vous sur ?')">
-    @method('delete')
-    @csrf
-   </form>
+ 
 
   @endforeach
+  
+
 
 
   <article class="media content-section">
@@ -83,15 +82,37 @@
   @method('delete')
   @csrf
  </form>
+  
+ 
+ <!-- formulaire pour modifier la reponse specifiee-->
+
+  
+  
+ <form  method="post" id="update.comment" >
+    @method('put')
+    @csrf
+   </form>
+
+
+
+ <!-- formulaire pour supprimer la reponse specifiee-->
+
+
+ <form  method="post" id="delete.comment" onsubmit="return confirm('Etse-vous sur ?')">
+    @method('delete')
+    @csrf
+  </form>
+
+
 
   <!-- le script est pour modifier la vue lors que vous cliquer sur la btn modifier-->
 
 
 <script >
 function modifier(id){
-   
-  var container= document.getElementById("modifier"+id);
-  var body=document.getElementById("responsebody"+id);
+   console.log(id.id);
+  var container= document.getElementById("modifier"+id.id);
+  var body=document.getElementById("responsebody"+id.id);
   console.log(body);
   var element=document.createElement('textarea');
   element.className="form-control border-0 "
@@ -100,19 +121,30 @@ function modifier(id){
   body.remove();
   element.setAttribute('form','update.comment');
   container.append(element);
-  var btn =document.getElementById("btnmodifier"+id);
+  var btn =document.getElementById("btnmodifier"+id.id);
   btn.remove();
-  var btn =document.getElementById("btnsupprimer"+id);
+  var btn =document.getElementById("btnsupprimer"+id.id);
   btn.remove();
   var btn=document.createElement('button');
   btn.setAttribute("class","btn btn-default text-primary");
   btn.setAttribute("form","update.comment");
-
   btn.innerText='Modifier';
+  var form=document.getElementById('update.comment');
+  var route='/response/'+id.id;
+  form.setAttribute('Action',route);
+  console.log(form);
   container.append(btn);
 }
 
+function drop(id){
+  var form=document.getElementById('delete.comment');
+  var route='/response/'+id.id;
+  form.setAttribute('Action',route);
+  console.log(form);
+  if (confirm('Etse-vous sur ?'))
+  form.submit();
 
+}
 
 
 </script>

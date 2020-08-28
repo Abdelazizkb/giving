@@ -1,9 +1,12 @@
 @extends('layouts.base',['title'=>'home'])
 
 @section('content')
-<h3>Publiez votre besoin</h3>
-<div class="ml-5 pl-5 col-md-12 col-md-offset-2 col-sm-10 col-sm-offset-1">
-    <form action="{{route('publication.store')}}" enctype="multipart/form-data"  method="post">
+<div class="content-section justify-content-center">
+
+<h3>Publiez votre besoin @include('partials._createdomain')
+</h3>
+
+    <form class="p-3" action="{{route('publication.store')}}" enctype="multipart/form-data"  method="post">
     @csrf
         <div class="d-block form-group row">
             <label class="d-block" for="title"> Titre</label>
@@ -17,13 +20,27 @@
 
 
        <div class="d-block form-inline  row">    
-        <select name="domain" class=" custom-select  pl-5 pr-5 mr-5 mb-2" id="domain">
+        <select name="domain" class=" custom-select  pl-5 pr-5  mb-2" id="domain">
+            <option selected>Domain</option>
                  @foreach ($domains as $domain)
-                      <option selected>Domain</option>
-                       <option  value="{{$domain->id}}">{{$domain->name}}</option> 
+                       <option  value="{{$domain->name}}">{{$domain->name}}</option> 
                   @endforeach 
             </select>
-            <select name="category" class=" custom-select  pl-5 pr-5 mb-2 " id="category">
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-default dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="dropdown-menu p-4">
+                      <div class="form-group">
+                        <label for="name">Nom de domain</label>
+                        <input type="text" class="form-control m-1"  id="domainname" name="domainname" >
+                      </div>
+                 
+                      <button type="button"  class="btn btn-primary "  onclick="add_domain()" >ajouter</button>
+                  </div>
+                  </div>
+ 
+            <select name="category" class=" custom-select  pl-5 pr-5 ml-5 mb-2 " id="category">
                    @foreach ($categories as $category)
                          <option selected>Categorie</option>
                         <option value="{{$category->id}}">{{$category->name}}</option> 
@@ -60,12 +77,27 @@
          
 
        <div class="d-block form-group row">
-        <input type="submit" id="title" class="form-control border-rounded"  value="Partager">
+        <input type="submit" id="title" class="form-control border-rounded orange text-white"  value="Partager">
         </div>
 
 
    </form>
-</div>
 
+
+</div>
+<script>
+    function add_domain(){
+    var domain=document.getElementById('domain');
+    var option=document.createElement('option');
+    var inputVal = document.getElementById("domainname");
+    
+    option.value=inputVal.value;
+    option.selected=true;
+    option.innerText=inputVal.value;
+    console.log(option);
+    domain.appendChild(option);
+    
+    }
+      </script>
 
 @endsection

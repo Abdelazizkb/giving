@@ -1,20 +1,25 @@
 @extends('layouts.base',['title'=>'Connexion'])
 
 @section('content')
-<div class="content-section">
+<div class="content-section justify-content-center">
    
                 
 
                 
                     <form method="post" id='form' action="{{ route('Login',['type'=>'donor']) }}" >
                         @csrf
-                        <div class="form-inline ml-5 pb-2 pl-5">
+                        <div class="d-flex justify-content-center">
+                         <img class="rounded-circle ml-3" src="{{asset('img/user.png')}}" alt="">
+                               
+                              </div>
+
+                        <div class="form-inline  mb-2  justify-content-center">
                             <input type="radio" class=" d-inline-flexd ml-5" id="donateur" name="gender" checked="on" value="donateur" onclick="donor()">
                             <label for="donateur"  class=" ml-1 pr-4" >Donateur</label><br>
                             <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="membre()">
                             <label class="ml-1 pr-4" for="female" >Membre</label><br>
                             <input type="radio"  id="respresentant_check"class=" d-md-inline-flexd" id="membre" name="gender" value="female"   onclick="demandeur()">
-                            <label class=" ml-1 pr-4" for="female" >demandeur</label><br>
+                            <label class=" ml-1 pr-4" for="female" >Demandeur</label><br>
                             
                         </div>
                         <div class="form-group row">

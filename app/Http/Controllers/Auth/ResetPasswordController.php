@@ -119,7 +119,32 @@ public function showResetForm($type,$phone){
     return view('auth.passwords.reset',['phone'=> $phone ,'type'=>$type]);
 }
 
+public function resendcode($type,$user){
+    $code = Keygen::numeric(6)->generate();
+  
+    $basic  = new \Nexmo\Client\Credentials\Basic('1ebd6fa8', 'gx9J1TgFE0a5sN3Z');
+    $client = new \Nexmo\Client($basic);
 
+   /* $message = $client->message()->send([
+      'to' => '213541259036',
+      'from' => 'Vonage APIs',
+      'text' => 'Givingcom : votre code de verification '.$code
+    ]);
+    $u_code=Auth::user()->code;
+    $u_code->code=$code;
+    $u_code->save();*/
+    if($type=='donor'){
+        $user=Donor::whereId($user)->first(); 
+       }
+       if($type=='demandeur'){
+           $user=Demandeur::whereId($user)->first(); 
+       }
+       if($type=='membre'){
+           $user=Membre::whereId($user)->first(); 
+       
+       }
+    return view('auth.passwords.confirm',compact(['user','type']));
+  }
 
 
 

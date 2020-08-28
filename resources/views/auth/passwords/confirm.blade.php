@@ -27,7 +27,7 @@
                                 </button>
 
                                 
-                                    <a class="btn btn-link" href="{{route('resendcode',['type'=>$type])}}">
+                                    <a class="btn btn-link" href="{{route('resendcode-confirm',['type'=>$type,'user'=>$user])}}">
                                         {{ __("J'ai pas recu ") }}
                                     
                                     </a>
