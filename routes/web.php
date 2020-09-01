@@ -32,14 +32,14 @@ Route::post('/demandeur/register', 'Auth\RegisterController@createDemandeur')->n
 
 
 
-
+/*
 Route::get('/admin/register', 'Auth\RegisterController@showAdminRegisterForm')->name('adminregister');
 Route::post('/admin/register', 'Auth\RegisterController@createAdmin');
 
 Route::get('/admin/login', 'Auth\LoginController@showAdminloginForm')->name('adminlogin');
 Route::post('/admin/login', 'Auth\LoginController@adminlogin');
 
-
+*/
 
 Route::post('/verify/{type}', 'verifyController@verify')->name('verify');
 Route::get('/verify/{type}', 'verifyController@verifyForm')->name('verify');
@@ -78,3 +78,8 @@ Route::resource('association', 'AssociationController')->only(['index','show','u
 Route::resource('domain', 'DomainController')->only(['store']);
 
 Route::get('publication/filter/{domain}', 'PublicationController@filter')->name('filter');
+
+
+Route::get('/help/{publication}','HelpController@help')->name('help');
+Route::get('/take/{publication}','HelpController@take')->name('take');
+Route::get('/helper/{user}/{type}','profileController@helper');

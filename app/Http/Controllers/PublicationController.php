@@ -61,7 +61,8 @@ class PublicationController extends Controller
       'domain_id'=>$domain->id,
       'category_id'=>$request->category,
       'publicatable_type'=> ($this->publicatable_Type()),
-      'publicatable_id'=>Auth::user()->id
+      'publicatable_id'=>Auth::user()->id,
+      'type'=>$this->type_publication()
       ]);
 
 
@@ -171,4 +172,16 @@ class PublicationController extends Controller
         return 'demandeur';
 
     }
+
+    protected function type_publication(){
+       
+        if(Auth::guard('demandeur')->check())
+        return 'demande';
+        else
+        return 'donation';
+
+
+    }
+
+
 }

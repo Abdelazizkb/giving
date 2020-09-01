@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function __construct()
     {   
-        $this->middleware('auth:donor,membre,demandeur,admin,representant');
+        $this->middleware('auth:donor,membre,demandeur,representant');
     }   
 
     public function index()

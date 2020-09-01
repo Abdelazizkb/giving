@@ -9,8 +9,9 @@ class Publication extends Model
     protected $tabel='publications';
 
     protected $fillable = [
-    'title', 'body', 'publicatable_id','publicatable_type','domain_id','category_id'
+    'title', 'body', 'publicatable_id','publicatable_type','domain_id','category_id','type','helps','active'
     ];
+   
     public function publicatable()
     {
         return $this->morphTo();

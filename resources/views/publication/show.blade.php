@@ -6,21 +6,48 @@
     <img class="rounded-circle article-img" src="{{asset('storage/'.$publication->publicatable->image->image )}}">
     <div class="media-body">
       <div class="article-metadata">
-      <a class="mr-2" href="{{route('profile-visite',['user'=> $publication])}}">
-        {{ $publication->publicatable->first_name  }}
-      </a>
+        <a class="mr-2" href="{{route('profile-visite',['user'=> $publication])}}">
+         {{ $publication->publicatable->first_name  }}
+        </a>
         <small class="text-muted">{{ $publication->created_at }}</small>
-        
         @if($publication->publicatable->id == Auth::guard($type)->user()->id and ('app\\'.$type)==strtolower($publication->publicatable_type) ) 
-        <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{route('publication.edit',['publication'=>$publication])}}" >Modifier</a>
-            <button class="btn btn-danger btn-sm mt-1 mb-1" form="delete">Supprimer</button>
-          </div>
-        @endif
+        <div class="dropdown d-inline-block float-right pt-0 m-0">
+           <button class="btn btn-default dropdown p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <i class="fa fa-angle-double-down"></i></button>  
+        
+           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+           <a class="btn btn-default text-primary" href="{{route('publication.edit',['publication'=>$publication])}}">Modifier</a>
+            <button class="btn btn-default text-primary"  form="delete">Supprimer</button>
+
+           </div>
+      </div>
+      @endif
       </div>
       <h2 class="article-title">{{ $publication->title }}</h2>
       <p class="article-content">{{ $publication->body }}</p>
       <img src="{{asset('storage/'.$publication->image->image)}}" alt="" class="col-md-8  d-inline">
+      
+      @if(! ($publication->publicatable->id == Auth::guard($type)->user()->id and ('app\\'.$type)==strtolower($publication->publicatable_type)))
+        @if ($publication->type=="demande")
+             @if (! Auth::guard('demandeur')->check())
+             <div class="border-top col-md-12 d-block mt-1">
+              <a  class=" btn btn-default border-secondary  m-1 float-right" href="{{route('help',['publication'=>$publication])}}">
+                Aider ({{$publication->helps}})
+              </a>
+             </div>
+              @endif
+       @else
+       <div class="border-top col-md-12 d-block mt-1">
+        <a  class="btn btn-default border-secondary  m-1 float-right" href="{{route('take',['publication'=>$publication])}}">
+          Benefecier ({{$publication->helps}})
+        </a>
+      </div>
+        @endif
+    
+      @endif
+     
+
     </div>
   </article>
 

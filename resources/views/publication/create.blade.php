@@ -6,7 +6,7 @@
 <h3>Publiez votre besoin @include('partials._createdomain')
 </h3>
 
-    <form class="p-3" action="{{route('publication.store')}}" enctype="multipart/form-data"  method="post">
+    <form class="p-3" action="{{route('publication.store')}}" id="publier" enctype="multipart/form-data"  method="post">
     @csrf
         <div class="d-block form-group row">
             <label class="d-block" for="title"> Titre</label>
@@ -16,49 +16,6 @@
                 <strong> :message </strong>
             </div>')!!}
        </div>
-
-
-
-       <div class="d-block form-inline  row">    
-        <select name="domain" class=" custom-select  pl-5 pr-5  mb-2" id="domain">
-            <option selected>Domain</option>
-                 @foreach ($domains as $domain)
-                       <option  value="{{$domain->name}}">{{$domain->name}}</option> 
-                  @endforeach 
-            </select>
-                <div class="dropdown d-inline-block">
-                    <button class="btn btn-default dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <i class="fa fa-plus"></i>
-                    </button>
-                    <div class="dropdown-menu p-4">
-                      <div class="form-group">
-                        <label for="name">Nom de domain</label>
-                        <input type="text" class="form-control m-1"  id="domainname" name="domainname" >
-                      </div>
-                 
-                      <button type="button"  class="btn btn-primary "  onclick="add_domain()" >ajouter</button>
-                  </div>
-                  </div>
- 
-            <select name="category" class=" custom-select  pl-5 pr-5 ml-5 mb-2 " id="category">
-                   @foreach ($categories as $category)
-                         <option selected>Categorie</option>
-                        <option value="{{$category->id}}">{{$category->name}}</option> 
-                    @endforeach 
-            </select>
-            
-             <div class="d-inline-block ml-5">
-               <label for="image" ><i class="fa fa-plus" aria-hidden="true"></i> <i class="fa fa-image fa-2x m-1 "></i></label>           
-               <input type="file" hidden id="image" name="image">
-               {!! $errors->first('image','
-               <div class="text-danger p2" role="alert">
-                   <strong> :message </strong>
-               </div>')!!}
-            </div>
-
-        </div>
-        
-        
 
         <input type="file"
                id="avatar" name="avatar"
@@ -99,5 +56,60 @@
     
     }
       </script>
+
+@endsection
+
+
+@section('sidebar')
+<div class="col-md-4">
+    <div class="content-section">
+        <strong class="m-3">Ajouter une photo :</strong>
+        <div class="d-inline-block ">
+            <label for="image" ><i class="fa fa-plus" aria-hidden="true"></i> <i class="fa fa-image fa-2x align-bottom " ></i></label>           
+            <input type="file" hidden id="image" name="image" form="publier">
+            {!! $errors->first('image','
+            <div class="text-danger p2" role="alert">
+                <strong> :message </strong>
+            </div>')!!}
+         </div>
+    </div>
+  
+    <div class="content-section">
+        <strong class="m-3">Selectionner la categorie :</strong>
+
+          <select name="category" class=" custom-select    mb-2" id="category" size="3" multiple  form="publier">
+              
+              
+              @foreach ($categories as $category)
+                 <option value="{{$category->id}}">{{$category->name}}</option> 
+               @endforeach 
+           </select>
+    </div>
+    <div class="content-section">
+        <strong class="m-3">Selectionner le domain :</strong>
+        <div class="dropdown d-inline-block">
+            <button class="btn btn-default dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <i class="fa fa-plus"></i>
+            </button>
+            <div class="dropdown-menu p-4">
+              <div class="form-group">
+                <label for="name">Nom de domain</label>
+                <input type="text" class="form-control m-1"  id="domainname" name="domainname"  form="publier" >
+              </div>
+         
+              <button type="button"  class="btn btn-primary "  onclick="add_domain()" >Ajouter</button>
+          </div>
+          </div>
+
+          <select name="domain" class=" custom-select    mb-2" id="domain" size="4" multiple  form="publier">
+          
+                    @foreach ($domains as $domain)
+                       <option  value="{{$domain->name}}">{{$domain->name}}</option> 
+                   @endforeach 
+           </select>
+
+    </div>     
+
+</div>
 
 @endsection

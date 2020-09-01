@@ -44,5 +44,14 @@ public function profileResponse($user){
     return view('profile',compact('user'));
 }
 
+public function helper($user,$type='demandeur'){
+    if($type=='donor')
+    $user=Donor::where('id',$user)->first();
+    if($type=='demandeur')
+    $user=Demandeur::where('id',$user)->first();
+    if($type=='membre')
+    $user=Membre::where('id',$user)->first();
+  return  view('profile',compact('user'));
+}
 
 }

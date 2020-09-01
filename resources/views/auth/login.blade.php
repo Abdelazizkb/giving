@@ -1,11 +1,8 @@
 @extends('layouts.base',['title'=>'Connexion'])
 
 @section('content')
-<div class="content-section justify-content-center">
-   
-                
+<div class="content-section row justify-content-center">
 
-                
                     <form method="post" id='form' action="{{ route('Login',['type'=>'donor']) }}" >
                         @csrf
                         <div class="d-flex justify-content-center">
