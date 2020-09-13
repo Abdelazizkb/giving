@@ -16,7 +16,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/main.css') }}">
 
     <title>{{ $title ?? 'home'}}</title>
-  
+    @livewireStyles
+
 </head>
 <body>
     <header class="site-header">
@@ -33,7 +34,7 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
                @auth()
-            <a class="nav-item nav-link" href="{{route('profile') }}"><img class="rounded-circle" width="40px" src="{{asset('storage/'.Auth::user()->image->image)}}" alt=""></a>
+            <a class="nav-item nav-link" href="{{route('profile') }}"><img class="rounded-circle " width="40px" src="{{asset('storage/'.Auth::user()->image->image)}}" alt=""></a>
                 <a class="nav-item nav-link" href="{{route('Logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();" ><i class="fa fa-sign-out fa-2x"></i></a>
                 <form id="logout-form" action="{{ route('Logout') }}" method="POST" style="display: none;">
@@ -63,7 +64,7 @@
           
           @yield('content')
           </div>
-     
+
            @yield('sidebar')
         </div>
       </div>  
@@ -71,6 +72,7 @@
     <script src="//code.jquery.com/jquery.js"></script>
 
     @include('flashy::message')
+    @livewireScripts
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

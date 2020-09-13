@@ -15,44 +15,7 @@
 
 </article>
 
-<article class="media content-section " id="filter_box" hidden>
-<select class="selectpicker form-control col-md-4 mr-2" name="category" id="category">
-<option class="special">htht</option>
-
-</select>
-
-<select class="selectpicker form-control col-md-4" name="category" id="category">
-  <option class="special">htht</option>
-  
-  </select>
-  <button class="btn btn-default blue ml-4 text-white col-md-3" type="button">Filtre</button>
-
-</article>
-
-@foreach($publications->sortbydesc("updated_at") as $publication)
-
-<article class="media content-section">
-  <img class="rounded-circle article-img" src="{{asset('storage/'.$publication->publicatable->image->image )}}">
-    <div class="media-body">
-      <div class="article-metadata">
-       
-     <a class="mr-2" href="{{route('profile-visite',['user'=> $publication])}}">
-          {{ $publication->publicatable->first_name  }}
-     </a>
-        <small class="text-muted">{{ $publication->created_at }}</small>
-      </div>
-
-      <h2><a class="article-title d-inline" href="{{route('publication.show',[$publication])}}">{{ $publication->title }}</a></h2>
-    <img src="{{asset('storage/'.$publication->image->image)}}" alt="" class=" rounded d-block h-75 w-100">
-  </div>
-
-</article>
-
-
-
-@endforeach
-
-
+@livewire('publications-list')
 @endsection
 
 
@@ -84,6 +47,7 @@
 </div>
 
 <script>
+  document.getElementById('filter_box').hidden=true;
 function filter(){
  if( document.getElementById('filter_box').hidden)
  {

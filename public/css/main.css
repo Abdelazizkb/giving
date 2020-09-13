@@ -43,6 +43,26 @@ body {
     border-radius: 15px;
     margin-bottom: 20px;
   }
+  .post-section{
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  .block-section{
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    height: 120px;
+    width: 350px;
+    margin-right: 200px;
+    margin-bottom:90px ;
+  }
+  .block-section img{
+    width: 100px;
+    height: 100px;
+  } 
   .content-section p{
     word-break: break-all;
 
@@ -89,6 +109,12 @@ body {
     margin-right: 20px;
     margin-bottom: 16px;
   }
+  .account-icon {
+    height: 60;
+    width: 60px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
   
   .account-heading {
     font-size: 2.5rem;
@@ -112,10 +138,20 @@ width: 40px;
   width: 40px;
 }
 
+.visible{
+  overflow:visible;
+}
+.welcom-header{
+  position: relative;
+  height: 850px;
+  
+}
 
-
-
-
+.welcom-header div{
+  position: absolute;
+left: 64%;
+top: 30%;
+}
 
 
 

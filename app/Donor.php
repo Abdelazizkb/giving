@@ -12,7 +12,7 @@ class Donor extends Authenticatable
 protected $guard = 'donor';
 protected $primaryKey='id';
 protected $fillable = [
-'name', 'email', 'password','first_name','last_name','phone'
+'name', 'email', 'password','first_name','last_name','phone','is_active'
 ];
 protected $hidden = [
 'password', 'remember_token',

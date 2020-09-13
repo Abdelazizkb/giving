@@ -26,13 +26,13 @@ class AnnonceController extends Controller
     public function __construct()
     {   
         $this->middleware('auth:donor,membre,demandeur,admin');
-        $this->middleware('auth:representant')->except(['index','show']);
+        $this->middleware('auth:representant')->except(['index','show','participate']);
 
     }   
 
     public function index()
     { 
-      $annonces=Annonce::get();
+      $annonces=Annonce::where('active',1)->get();
       return view('annonce.index',compact('annonces'));
     }
 
@@ -145,4 +145,11 @@ class AnnonceController extends Controller
         $annonce->delete();
          return redirect()->route('annonce.index');
     }
+
+    public function participate($annonce){
+        $annonce=Annonce::where('id',$annonce)->first();
+        $annonce->participers=$annonce->participers+1;
+        $annonce->save();
+       return redirect()->back();   
+      }
 }

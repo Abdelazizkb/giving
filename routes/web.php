@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Publication;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $publications=Publication::limit(5)->get();
+    return view('welcome',compact('publications'));
 })->middleware(['guest','guest:donor','guest:admin','guest:membre','guest:demandeur']);
 
 Auth::routes();
@@ -82,4 +83,19 @@ Route::get('publication/filter/{domain}', 'PublicationController@filter')->name(
 
 Route::get('/help/{publication}','HelpController@help')->name('help');
 Route::get('/take/{publication}','HelpController@take')->name('take');
+
+Route::get('/participate/{annonce}','AnnonceController@participate')->name('participate');
+
 Route::get('/helper/{user}/{type}','profileController@helper');
+
+Route::prefix('admin')->group(function () {
+
+    Route::get('donateurs','AdminController@donors')->name('donors-list');
+    Route::get('membres','AdminController@membres')->name('membres-list');
+    Route::get('demandeurs','AdminController@demandeurs')->name('demandeurs-list');
+    Route::get('publications','AdminController@publications')->name('publications-list');
+    Route::get('annonces','AdminController@annonces')->name('annonces-list');
+    Route::get('deactivate/{type}/{id}','AdminController@deactivate')->name('deactivate');
+    Route::get('activate/{type}/{id}','AdminController@activate')->name('activate');
+
+});

@@ -1,16 +1,16 @@
-@extends('multiauth::layouts.app')
+@extends('multiauth::layouts.base')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header orange">Modifier ce Role</div>
+                <div class="card-body "><strong class="bg-light rounded p-2 border"> Modifier ce Role</strong></div>
 
                 <div class="card-body">
                     <form action="{{ route('admin.role.update', $role->id) }}" method="post">
                         @csrf @method('patch')
                         <div class="form-group">
-                            <label for="role">Role Nom</label>
+                            <label for="role">Nom de Role </label>
                             <input type="text" value="{{ $role->name }}" name="name" class="form-control" id="role">
                         </div>
                         <div class="form-group">

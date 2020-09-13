@@ -1,90 +1,93 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        
-        <link rel="stylesheet" type="text/css" href="{{asset('css/main.css') }}">
-        <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css') }}">
+    <title>GivingCom</title>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #C0EDCE;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-            .full-height {
-                height: 100vh;
-            }
+    <!-- Styles -->
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+</head>
 
-            .position-ref {
-                position: relative;
-            }
+<body>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    <nav class="navbar navbar-expand-lg navbar-light bg-white ml-2 mr-2 fixed-top mt-2 rounded">
+        <div class="container-fluid">
 
-            .content {
-                text-align: center;
-            }
 
-            .title {
-                font-size: 84px;
-            }
+            <img width="60" src="{{asset('img/logo.png')}}" alt="">
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-align-justify"></i>
+            </button>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ml-auto">
+
+
+
+                    @if (Route::has('login'))
                     @auth
-                        <a class="bg-steel" href="{{ url('/home') }}">Home</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url('/home') }}">Home</a>
+                    </li>
+
                     @else
-                        <a class="btn btn-default text-white p-1 text-italic bg-steel"  href="{{ route('login') }}">Connexion</a>
+                    <li class="nav-item">
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">S'inscrir</a>
-                        @endif
+                        <a class="nav-link" href="{{ route('login') }}">Connexion</a>
+                    </li>
+                    @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">S'inscrir</a>
+                    </li>
+                    @endif
                     @endauth
-                </div>
-            @endif
 
-           
+                    @endif
+
+                </ul>
+            </div>
         </div>
-    </body>
+    </nav>
+    <div class="bg-white ml-2 mr-2 rounded welcom-header" height="300px">
+        <img class="w-50 h-100 mx-auto d-inline-block rounded-left" src="{{asset('img/donate1.jpg')}}" alt="">
+        <div class="d-inline-block">
+            <h1 class="text-monospace"> Bienvenue sur GivingCom</h1>
+            <strong  >
+             <pre class="text-muted">   Pour aider des gens ou pour partager
+                 votre besoin s'inscrir sur givingcom 
+            </pre>      
+               </strong>
+             
+
+            <a class="btn btn-outline-primary d-block rounded-pill col-md-6 mx-auto mt-3"
+                href="{{ route('register') }}">S'inscrir</a>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 mx-auto">
+        @livewire('publications-list')
+    </div>
+    @livewireScripts
+
+    <script>
+        document.getElementById('filter_box').hidden = true;
+    </script>
+</body>
+
 </html>

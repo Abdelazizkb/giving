@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginFormRequest;
 use Auth;
@@ -42,30 +43,7 @@ class LoginController extends Controller
         $this->middleware(['guest','guest:donor','guest:admin','guest:membre','guest:demandeur'])->except('logout');
     }
 
-   public function showAdminLoginForm()
-    {
-        return view('auth.adminlogin');
-    }
 
-
-
-  /*  public function Login(Request $request,$type)
-    {
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:6'
-        ]);
-
-          $credentials = $request->only('email', 'password');
-         if (Auth::guard($type)->attempt($credentials,$request->get('remember'))) {
-        return redirect()->route($type);
-            }
-         dd('error');;;;;
-        flash('mot de passe ou email non valide','danger');
-        return back()->withInput($request->only('email', 'remember'));
-    }
-
-*/
     
 
      public function login(LoginFormRequest $request,$type)
@@ -83,16 +61,23 @@ class LoginController extends Controller
         }
 
 
-
         
             // Authentication passed...
        
-            
-            
+            $active=Db::select("select is_active from ".$type."s   where phone =".$request->phone);
 
-        if ($this->attemptLogin($request,$type)) {
+
+        // verifie si il est bloque    
+       if(! $active[0]->is_active){
+        return redirect()->back();
+
+       }
+
+        if ($this->attemptLogin($request,$type) ) {
+   
             $this->representantLogin($type,Auth::guard($type)->user(),$request);
             return redirect()->route('home');
+             
         }
         
 
@@ -104,6 +89,8 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+
+    
      protected function attemptLogin(Request $request,$type)
     {
         return Auth::guard($type)->attempt(

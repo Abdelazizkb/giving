@@ -1,9 +1,9 @@
-@extends('multiauth::layouts.app') @section('content')
+@extends('multiauth::layouts.base') @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header orange text-white">Modifier les information de {{$admin->name}}</div>
+                <div class="card-body "><strong class="card p-2 bg-light rounded "> les information de {{$admin->name}}</strong></div>
 
                 <div class="card-body">
                     @include('multiauth::message')
@@ -40,9 +40,9 @@
                             @endif
                         </div>
 
-                        <div class="form-group row">
-                            <label for="active" class="col-md-4 col-form-label text-md-right">Activer</label>
-                            <input type="checkbox" value="1" {{ $admin->active ? 'checked':'' }} name="activation" class="form-control col-md-6" id="active">
+                        <div class="form-group block">
+                            <label for="active" class="col-md-4 col-form-label text-md-right d-inline-block">Activer</label>
+                            <input type="checkbox" value="1" {{ $admin->active ? 'checked':'' }} name="activation" class="p-2 d-inline-block" id="active">
                         </div>
 
                         <div class="form-group row mb-0">

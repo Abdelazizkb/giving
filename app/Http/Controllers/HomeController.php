@@ -15,10 +15,9 @@ class HomeController extends Controller
     }   
 
     public function index()
-    {   $annonces=Annonce::limit(5)->get();
-        $publications=Publication::get();
+    {   $annonces=Annonce::limit(5)->where('active',1)->get();
         $domains=Domain::get();
-        return view('home',compact('publications','annonces','domains'));
+        return view('home',compact('annonces','domains'));
     }
 
 

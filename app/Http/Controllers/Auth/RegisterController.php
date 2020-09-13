@@ -44,12 +44,12 @@ class RegisterController extends Controller
         $associations=Association::all();
         return view('auth.register',compact('associations'));
     }
-    public function showAdminRegisterForm()
+   /* public function showAdminRegisterForm()
     {
         return view('auth.adminregister');
     }
 
-
+*/
 
 
     /**
@@ -286,7 +286,7 @@ class RegisterController extends Controller
         
         }
     }
-protected function createAdmin(registerFormRequest $request)
+/*protected function createAdmin(registerFormRequest $request)
 {
 
 $admin=Admin::where('email', $request->email)->get();
@@ -305,7 +305,7 @@ flash('email deja utiliser','danger');
 return redirect()->back();
 }
 }
-
+*/
 protected function nexmo($user,$type){
     $code = Code::firstOrCreate(['codeable_type'=>$type,'codeable_id'=>$user->id ],
     ['code' => Keygen::numeric(6)->generate()]

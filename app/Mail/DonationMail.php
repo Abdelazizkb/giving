@@ -39,10 +39,12 @@ class DonationMail extends Mailable
         $type='membre';
         $id=Auth::guard('membre')->user()->id;
         }
+      
+
     return $this->markdown('emails.donation',
-    ['user'=>Auth::guard('donor')->user(),
-    'url'=>'http://127.0.0.1:8000/publication/'.$this->publication,
-    'url1'=>'http://127.0.0.1:8000/helper/'.$id.'/'.$type, 
+    ['user'=>Auth::guard($type)->user(),
+    'url'=>'http://localhost:8001/publication/'.$this->publication,
+    'url1'=>'http://localhost:8001/helper/'.$id.'/'.$type, 
     ]
 
    );

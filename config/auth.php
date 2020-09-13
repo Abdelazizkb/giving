@@ -53,10 +53,7 @@ return [
              'driver' => 'session',
             'provider' => 'representants',
         ],
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
+      
         'demandeur' => [
             'driver' => 'session',
             'provider' => 'demandeurs',
@@ -108,10 +105,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Demandeur::class,
         ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Admin::class,
-        ],
+       
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

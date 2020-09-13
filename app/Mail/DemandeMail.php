@@ -32,8 +32,8 @@ class DemandeMail extends Mailable
     {    
         return $this->markdown('emails.demande',
         ['user'=>Auth::guard('demandeur')->user(),
-        'url'=>'http://127.0.0.1:8000/publication/'.$this->publication,
-        'url1'=>'http://127.0.0.1:8000/helper/'.Auth::guard('demandeur')->user()->id.'/demandeur', 
+        'url'=>'http://localhost:8001/publication/'.$this->publication,
+        'url1'=>'http://localhost:8001/helper/'.Auth::guard('demandeur')->user()->id.'/demandeur', 
         ]
     
        );

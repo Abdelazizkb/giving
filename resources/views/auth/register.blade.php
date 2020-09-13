@@ -82,7 +82,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Tel') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text"  class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  autocomplete="email">
+                                <input id="phone" type="text"  class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"  autocomplete="email" maxlength='10'>
 
                                 {!! $errors->first('phone','
                                 <div class="text-danger p2" role="alert">
@@ -125,7 +125,7 @@
                          
                         <div class="form-group row mb-0 ">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn text-white orange col-md-12  " >
+                                <button type="submit" class="btn text-white orange col-md-12  " disabled>
                                     {{ __('Register') }}
                                 </button>
                             </div>

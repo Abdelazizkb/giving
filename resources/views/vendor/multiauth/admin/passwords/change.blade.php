@@ -1,10 +1,10 @@
-@extends('multiauth::layouts.app') 
+@extends('multiauth::layouts.base') 
 @section('content')
 <div class="container">
     <div class="row ">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ ucfirst(config('multiauth.prefix')) }} Modifier mot de passe</div>
+                <div class="card-body"><strong class=" card bg-light rounded-pell p-2">{{ ucfirst(config('multiauth.prefix')) }} Modifier mot de passe </strong></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.password.change') }}" aria-label="{{ __('Admin Change Password') }}">

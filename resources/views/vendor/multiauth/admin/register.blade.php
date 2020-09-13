@@ -1,8 +1,8 @@
-@extends('multiauth::layouts.app') 
+@extends('multiauth::layouts.base') 
 @section('content')
 <div class="container">
     <div class="row ">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class=" align-self-center mr-3 p-2"><img class="rounded-circle ml-3" src="{{asset('img/user.png')}}" alt="">                </div>
                 <div class="card-body">

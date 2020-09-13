@@ -1,17 +1,17 @@
-@extends('multiauth::layouts.app')
+@extends('multiauth::layouts.base')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card ">
-                <div class="card-header orange text-white">Ajouter un nouveau role</div>
+                <div class="card-body "><strong class="bg-light rounded p-2 border"> Ajouter un nouveau role </strong></div>
 
                 <div class="card-body">
                     @include('multiauth::message')
                     <form action="{{ route('admin.role.store') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label for="role">Role Nom</label>
+                            <label for="role"> Nom de role</label>
                             <input type="text" placeholder="Donne un nom pour le role" name="name"
                                 class="form-control" id="role" required>
                         </div>

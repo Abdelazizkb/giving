@@ -6,12 +6,13 @@
       <div class="media">
         <div class="dropdown">
           <button class="btn btn-default dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          
+         
           @if(! $association->image==null)
               <img class="rounded-circle account-img" src="{{asset('storage/'.$association->image->image)}}">
           @else
               <img class="rounded-circle account-img" alt="image">
           @endif
+          
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                @if(Auth::guard('representant')->check() )
@@ -39,8 +40,12 @@
     @foreach($association->annonces->sortbydesc("updated_at") as $annonce)
 
     <article class="media content-section">
-     <img class="rounded-circle article-img" src="{{asset('storage/'.$annonce->association->image->image )}}"> 
-        <div class="media-body">
+      @if(! $association->image==null)
+              <img class="rounded-circle account-img" src="{{asset('storage/'.$association->image->image)}}">
+         @else
+              <img class="rounded-circle account-img" alt="image">
+      @endif 
+             <div class="media-body">
           <div class="article-metadata">
            
           <a class="mr-2" href="{{route('association.show',['association'=>$annonce->association])}}">
