@@ -1,4 +1,4 @@
-## Donation plateform builded with laravel
+## Donation plateform builded with laravel framework and laravel livewire
 ![plateform](https://github.com/Abdelazizkb/giving/blob/master/givingcom.png)
 
 
