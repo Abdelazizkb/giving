@@ -1,7 +1,6 @@
 ## Donation plateform builded with laravel
-![Test Image 4](https://github.com/Abdelazizkb/giving/blob/master/givingcom.png)
+![plateform](https://github.com/Abdelazizkb/giving/blob/master/givingcom.png)
 
-<p align="center"><img src="https://raw.githubusercontent.com/Pharaonic/logos/main/has-files.jpg" width="400"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
